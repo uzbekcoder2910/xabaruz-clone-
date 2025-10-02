@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ news_detail.slug }}{% endblock title %}
+
+
+{% block content %}
+    <div class="container">
+    <div class="row text-center">
+        <div class="col-12">
+            <h1>{{ news_detail.title }}</h1>
+            <img src="{{ news_detail.image.url }}" alt="">
+            <p>{{ news_detail.body | linebreaks }}</p>
+            <h5>Category:{{ news_detail.category }}</h5>
+            <h5>Publish time: {{ news_detail.publish_time }}</h5>
+            <p><a href="{% url 'news_list' %}">All news >>>></a></p>
+        </div>
+    </div>
+    </div>
+
+
+
+{% endblock content %}

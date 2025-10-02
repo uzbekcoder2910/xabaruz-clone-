@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for news in news_list %}
+        <h3><a href="{{ news.get_absolute_url }}">{{ news.title }}</a></h3>
+        <p>{{ news.body }}</p>
+        <h5>Category:{{ news.category }}</h5>
+        <h5>Status: {{ news.status }}</h5>
+    {% endfor %}
+{% endblock content %}
