@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% endblock title %}
+
+{% block content %}
+
+    <h3>Welcome, {{ user.username }}</h3>
+    <h3><a class="text-danger" href="{% url 'logout' %}">Log Out</a></h3>
+    <h4>Your profile information</h4>
+    <img style="width: 50px;height: 50px;border-radius: 5px" src="{{ profile.photo.url }}" alt="{{ user.username }}">
+    <br>
+    <label>Username:</label><input value="{{ user.username }}" type="text" readonly placeholder="Username"><br>
+    <label>Email:</label><input type="text" value="{{ user.email }}" readonly placeholder="Email"><br>
+    <label>First Name:</label><input type="text" value="{{ user.first_name }}" readonly placeholder="First Name"><br>
+    <label>Last Name:</label><input type="text" value="{{ user.last_name }}" readonly placeholder="Last Name"><br>
+
+    <h4><a class="text-info" href="{% url 'password_change' %}">Change Password</a></h4>
+    <h4><a class="text-success" href="{% url 'profile_edit' %}">Edit Profile</a></h4>
+
+{% endblock content %}

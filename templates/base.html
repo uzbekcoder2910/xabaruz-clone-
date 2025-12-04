@@ -37,6 +37,13 @@
             </ul>
           </div>
           <div class="header_top_right">
+              {% if request.user.is_authenticated %}
+                  <p><a href="{% url 'logout' %}" class="text-primary">Log Out</a></p>
+                  <p><a href="{% url 'user_profile' %}" style="color: green">My Profile</a></p>
+              {% else %}
+                  <p><a href="{% url 'login' %}" style="color: green">Login</a></p>
+                  <p><a href="{% url 'signup' %}" style="color: yellow">Sign Up</a></p>
+              {% endif %}
             <p>{% now 'jS F Y H:i' %}</p>
           </div>
         </div>
@@ -55,7 +62,7 @@
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav main_nav">
+        <ul class="nav navbar-nav main_nav ">
           <li class="active"><a href="{% url 'news_index_list' %}"><span class="fa fa-home desktop-home"></span><span class="mobile-show">Home</span></a></li>
           <li><a href="{% url 'local_news_list' %}">Mahalliy</a></li>
 {#          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mobile</a>#}
@@ -67,11 +74,27 @@
 {#              <li><a href="#">Sympony</a></li>#}
 {#            </ul>#}
 {#          </li>#}
+          <li><a href="{% url 'news_create' %}">Yangilik yaratish</a></li>
           <li><a href="{% url 'foreign_news_list' %}">Xorijiy</a></li>
           <li><a href="{% url 'tech_news_list' %}">Texnologiya</a></li>
           <li><a href="{% url 'sport_news_list' %}">Sport</a></li>
           <li><a href="{% url 'contact' %}">Contact Us</a></li>
-{#          <li><a href="{% url 'error404' %}">404 Page</a></li>#}
+           {% if user.is_authenticated %}
+          <li>
+              <form action="{% url 'logout' %}" method="post" style="height: 50px;">
+                {% csrf_token %}
+                <button type="submit" style="height: 100%" class="btn btn-warning p-0">Log Out</button>
+              </form>
+          </li>
+          {% else %}
+              <li><a class="btn btn-success p-0" href="{% url 'login' %}">Login</a></li>
+               <li><a href="{% url 'signup' %}" class="btn btn-info">Sign Up</a></li>
+          {% endif %}
+        <li class="" style="height: 50px">
+            <form action="{% url 'search_news_list' %}" method="get" style="height: 50px;">
+                <input type="search" name="q" placeholder="Search.." class="form-control" style="height: 50px;;background-color: transparent">
+            </form>
+        </li>
         </ul>
       </div>
     </nav>
@@ -82,7 +105,7 @@
         <div class="latest_newsarea"> <span>Latest News</span>
           <ul id="ticker01" class="news_sticker">
               {% for news in latest_news %}
-            <li><a href="{{ news.get_absolute_url }}"><img src="{{ news.image.url }}" alt="">{{ news.title }}</a></li>
+                <li><a href="{{ news.get_absolute_url }}"><img src="{{ news.image.url }}" alt="">{{ news.title }}</a></li>
               {% endfor %}
           </ul>
           <div class="social_area">

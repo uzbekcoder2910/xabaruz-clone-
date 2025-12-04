@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from django import forms
-from .models import Contact
+from .models import Contact, Comment
+
 
 class ContactForm(ModelForm):
     class Meta:
@@ -11,3 +12,10 @@ class ContactForm(ModelForm):
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email*'}),
             'message': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Message*', 'rows': 5}),
         }
+
+
+class CommentForm(ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ['body']

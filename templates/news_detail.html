@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load hitcount_tags %}
 {% block title %}{{ news_detail.slug }}{% endblock title %}
 
 
@@ -10,13 +10,51 @@
             <h1>{{ news_detail.title }}</h1>
             <img src="{{ news_detail.image.url }}" alt="">
             <p>{{ news_detail.body | linebreaks }}</p>
-            <h5>Category:{{ news_detail.category }}</h5>
-            <h5>Publish time: {{ news_detail.publish_time }}</h5>
+            <h5><i class="fa fa-utility fa-semibold fa-bookmark"></i>:{{ news_detail.category }}</h5>
+            <h5><i class="fa fa-globe"></i>: {{ news_detail.publish_time }}</h5>
+            <h5><i class="fa fa-eye" aria-hidden="true"></i>: {% get_hit_count for news_detail %}</h5>
             <p><a href="{% url 'news_list' %}">All news >>>></a></p>
         </div>
+        {% if request.user.is_authenticated and request.user.is_superuser %}
+        <div class="col-12 text-center">
+            <button><a href="{% url 'news_edit' news_detail.slug %}">Edit</a></button>
+            <button><a href="{% url 'news_delete' news_detail.slug %}">Delete</a></button>
+        </div>
+        {% endif %} <br>
+    {% for comment in comments %}
+        <div class="comments" style="border: 1px solid black; padding: 10px;">
+            <p class="font-weight-bold">
+                {{ comment.user }}
+                <span class="text-muted font-weight-normal">
+                    {{ comment.created_at }}
+                </span>
+            </p>
+            <p>{{ comment.body | linebreaks }}</p>
+        </div>
+    {% endfor %}
+    {% if request.user.is_authenticated %}
+    <div class="col-md-8 mb-4 mt-3">
+        <div class="card-body">
+            <h3>Leave your comments here!</h3>
+            <form action="" method="post" style="margin-top: 1.3em;">
+                {% csrf_token %}
+                {{ comments_form.as_p }}
+                <button type="submit" class="btn btn-primary btn-lg">
+                    Submit Comment
+                </button>
+            </form>
+        </div>
+    </div>
+        {% else %}
+        <div class="col-8">
+        <h3 class="text-primary">To leave a comment you should either</h3>
+        <p>
+            <span><a class="btn btn-warning" href="{% url 'signup' %}">Sign up</a></span>
+            <span class="text-primary">or</span>
+            <span><a class="btn btn-info" href="{% url 'login' %}">Log in</a></span>
+        </p>
+        </div>
+    {% endif %}
     </div>
     </div>
-
-
-
 {% endblock content %}

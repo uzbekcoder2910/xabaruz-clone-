@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Logout Page{% endblock title %}
+
+{% block content %}
+
+    <h2>Websaytdan chiqish - Logout</h2>
+    <p>Siz websaytdan muvaffaqiyatli chiqarildingiz.</p>
+    <p><a href="{% url 'login' %}">Login again!</a></p>
+
+{% endblock content %}

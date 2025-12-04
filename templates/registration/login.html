@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login Page{% endblock title %}
+
+{% block content %}
+
+    <h2>Websaytga kirish - login</h2>
+    <p>Iltimos ushbu saytga kirish uchun quyidagi formani to'ldiring.</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+    <p><a class="text-danger" href="{% url 'password_reset' %}">Forgot password</a></p>
+
+{% endblock content %}

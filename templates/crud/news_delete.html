@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ news.slug }}{% endblock title %}
+
+{% block content %}
+    <div class="container">
+    <div class="row text-center">
+        <div class="col-12">
+            <h2>{{ news.title }}</h2>
+            <form action="" method="post">
+                {% csrf_token %}
+                <p>Ushbu sarlavhali xabarni o'chirishni tasdiqlaysizmi?</p>
+                <button class="btn btn-info">Confirm</button>
+            </form>
+        </div>
+    </div>
+    </div>
+{% endblock content %}
